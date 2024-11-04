@@ -7,7 +7,7 @@ export default function App() {
     <div className="container mx-auto my-10">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-center text-3xl font-semibold text-gray-800 dark:text-gray-100">
-          To-Do List
+          To-Do App
         </h1>
         <ThemeToggle />
       </div>
