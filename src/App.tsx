@@ -1,20 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import AddTodoForm from './components/AddTodoForm';
 import ToDoList from './components/ToDoList';
 import type { Todo } from './types/todo';
 
-let initialTodos: Todo[] = [
-  { id: 1, title: 'Clean kitchen', completed: false },
-  { id: 2, title: 'Do Laundry', completed: true },
-];
+const LOCAL_STORAGE_KEY = 'todos';
 
 export default function App() {
-  const [todos, setTodos] = useState<Todo[]>(initialTodos);
+  const [todos, setTodos] = useState<Todo[]>(() => {
+    const storedTodos = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return storedTodos
+      ? JSON.parse(storedTodos)
+      : [
+          { id: 1, title: 'Clean kitchen', completed: false },
+          { id: 2, title: 'Do Laundry', completed: true },
+        ];
+  });
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos));
+  }, [todos]);
 
   const addTodo = (title: string) => {
     const newTodo: Todo = {
-      id: todos.length + 1,
+      id: todos.length > 0 ? todos[todos.length - 1].id + 1 : 1,
       title,
       completed: false,
     };
