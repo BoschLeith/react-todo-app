@@ -5,9 +5,10 @@ interface ToDoListProps {
   todos: Todo[];
   toggleTodo: (id: number) => void;
   removeTodo: (id: number) => void;
+  editTodo: (id: number, title: string) => void;
 }
 
-function ToDoList({ todos, toggleTodo, removeTodo }: ToDoListProps) {
+function ToDoList({ todos, toggleTodo, removeTodo, editTodo }: ToDoListProps) {
   const renderTodos = todos.map((todo) => {
     return (
       <ToDoItem
@@ -15,6 +16,7 @@ function ToDoList({ todos, toggleTodo, removeTodo }: ToDoListProps) {
         todo={todo}
         toggleTodo={toggleTodo}
         removeTodo={removeTodo}
+        editTodo={editTodo}
       />
     );
   });

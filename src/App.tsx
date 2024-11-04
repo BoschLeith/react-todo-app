@@ -33,10 +33,21 @@ export default function App() {
     setTodos((currentTodos) => currentTodos.filter((todo) => todo.id !== id));
   };
 
+  const editTodo = (id: number, title: string) => {
+    setTodos((currentTodos) =>
+      currentTodos.map((todo) => (todo.id === id ? { ...todo, title } : todo)),
+    );
+  };
+
   return (
     <div>
       <div>To-Do List</div>
-      <ToDoList todos={todos} toggleTodo={toggleTodo} removeTodo={removeTodo} />
+      <ToDoList
+        todos={todos}
+        toggleTodo={toggleTodo}
+        removeTodo={removeTodo}
+        editTodo={editTodo}
+      />
       <AddTodoForm addTodo={addTodo} />
     </div>
   );
