@@ -29,10 +29,14 @@ export default function App() {
     );
   };
 
+  const removeTodo = (id: number) => {
+    setTodos((currentTodos) => currentTodos.filter((todo) => todo.id !== id));
+  };
+
   return (
     <div>
       <div>To-Do List</div>
-      <ToDoList todos={todos} toggleTodo={toggleTodo} />
+      <ToDoList todos={todos} toggleTodo={toggleTodo} removeTodo={removeTodo} />
       <AddTodoForm addTodo={addTodo} />
     </div>
   );

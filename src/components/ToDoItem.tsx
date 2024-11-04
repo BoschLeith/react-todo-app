@@ -3,9 +3,14 @@ import type { Todo } from '../types/todo';
 interface ToDoItemProps {
   todo: Todo;
   toggleTodo: (id: number) => void;
+  removeTodo: (id: number) => void;
 }
 
-export default function ToDoItem({ todo, toggleTodo }: ToDoItemProps) {
+export default function ToDoItem({
+  todo,
+  toggleTodo,
+  removeTodo,
+}: ToDoItemProps) {
   return (
     <div>
       <input
@@ -21,6 +26,7 @@ export default function ToDoItem({ todo, toggleTodo }: ToDoItemProps) {
       >
         {todo.title}
       </label>
+      <button onClick={() => removeTodo(todo.id)}>Delete</button>
     </div>
   );
 }
