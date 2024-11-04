@@ -1,27 +1,25 @@
-import type { Todo } from '../types/todo';
+import { useSelector } from 'react-redux';
+
+import { RootState } from '../store';
 import ToDoItem from './ToDoItem';
 
-interface ToDoListProps {
-  todos: Todo[];
-  toggleTodo: (id: number) => void;
-  removeTodo: (id: number) => void;
-  editTodo: (id: number, title: string) => void;
-}
+function ToDoList() {
+  const todos = useSelector((state: RootState) => state.todo.todos);
 
-function ToDoList({ todos, toggleTodo, removeTodo, editTodo }: ToDoListProps) {
-  const renderTodos = todos.map((todo) => {
-    return (
-      <ToDoItem
-        key={todo.id}
-        todo={todo}
-        toggleTodo={toggleTodo}
-        removeTodo={removeTodo}
-        editTodo={editTodo}
-      />
+  let content;
+  if (todos.length === 0) {
+    content = <div>No todos found</div>;
+  } else {
+    content = (
+      <div>
+        {todos.map((todo) => (
+          <ToDoItem key={todo.id} todo={todo} />
+        ))}
+      </div>
     );
-  });
+  }
 
-  return renderTodos;
+  return <div>{content}</div>;
 }
 
 export default ToDoList;

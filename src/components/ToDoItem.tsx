@@ -1,22 +1,19 @@
+import { useDispatch } from 'react-redux';
+
+import { deleteTodo, editTodo, toggleTodo } from '../todoSlice';
 import type { Todo } from '../types/todo';
 
 interface ToDoItemProps {
   todo: Todo;
-  toggleTodo: (id: number) => void;
-  removeTodo: (id: number) => void;
-  editTodo: (id: number, title: string) => void;
 }
 
-export default function ToDoItem({
-  todo,
-  toggleTodo,
-  removeTodo,
-  editTodo,
-}: ToDoItemProps) {
+export default function ToDoItem({ todo }: ToDoItemProps) {
+  const dispatch = useDispatch();
+
   const handleEdit = () => {
     const newTitle = prompt('Edit todo title:', todo.title);
     if (newTitle) {
-      editTodo(todo.id, newTitle);
+      dispatch(editTodo({ ...todo, title: newTitle }));
     }
   };
 
@@ -27,7 +24,9 @@ export default function ToDoItem({
         name={todo.title}
         id={todo.title}
         checked={todo.completed}
-        onChange={() => toggleTodo(todo.id)}
+        onChange={() =>
+          dispatch(toggleTodo({ ...todo, completed: !todo.completed }))
+        }
       />
       <label
         htmlFor={todo.title}
@@ -36,7 +35,7 @@ export default function ToDoItem({
         {todo.title}
       </label>
       <button onClick={handleEdit}>Edit</button>
-      <button onClick={() => removeTodo(todo.id)}>Delete</button>
+      <button onClick={() => dispatch(deleteTodo(todo.id))}>Delete</button>
     </div>
   );
 }

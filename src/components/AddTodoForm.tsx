@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-interface CreateTodoProps {
-  addTodo: (title: string) => void;
-}
+import { addTodo } from '../todoSlice';
 
-export default function CreateTodo({ addTodo }: CreateTodoProps) {
+export default function CreateTodo() {
   const [title, setTitle] = useState('');
+  const dispatch = useDispatch();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (title.trim()) {
-      addTodo(title);
+      dispatch(addTodo(title));
       setTitle('');
     }
   };
@@ -19,6 +19,7 @@ export default function CreateTodo({ addTodo }: CreateTodoProps) {
     <form onSubmit={handleSubmit}>
       <input
         type="text"
+        id="todo-input"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Add a new todo"
